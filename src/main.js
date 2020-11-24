@@ -16,7 +16,6 @@ const render = (container, template, place) => {
 const siteHeader = document.querySelector(`.header`);
 const siteFooter = document.querySelector(`.footer`);
 const siteMainElement = document.querySelector(`.main`);
-const siteMainNavigaion = siteMainElement.querySelector(`.main-navigation`);
 
 render(siteHeader, headerProfile(), `beforeend`);
 render(siteFooter, futerStatistic(), `beforeend`);
