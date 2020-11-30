@@ -26,7 +26,7 @@ const siteFooter = document.querySelector(`.footer`);
 const siteMainElement = document.querySelector(`.main`);
 
 render(siteHeader, headerProfile(), `beforeend`);
-render(siteFooter, futerStatistic(), `beforeend`);
+render(siteFooter, futerStatistic(films.length), `beforeend`);
 render(siteMainElement, createMainNavigaionTemplate(filters), `beforeend`);
 render(siteMainElement, createSortTemplate(), `beforeend`);
 render(siteMainElement, createFilmsTemplate(), `beforeend`);
@@ -71,4 +71,4 @@ for (let i = 0 ; i < TEMP_EXTRA_FILM_COUNT; i++) {
   render(siteExtraFilmsListContainer[1].querySelector(`.films-list__container`), createFilmCardTemplate(films[i]), `beforeend`);
 }
 
-render(siteFilmsListContainer, createFilmDetailsTemplate(films[0]), `beforeend`);
+render(siteFilmsContainer, createFilmDetailsTemplate(films[0]), `beforeend`);

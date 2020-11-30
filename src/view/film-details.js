@@ -21,7 +21,13 @@ const createCommentItemTemplate = (commentData) => {
           </p>
         </div>
       </li>`
-    );
+  );
+};
+
+const createGenreTemplate = (genreItem) => {
+  return (
+    `<span class="film-details__genre">${genreItem}</span>`
+  );
 };
 
 export const createFilmDetailsTemplate = (film) => {
@@ -31,7 +37,7 @@ export const createFilmDetailsTemplate = (film) => {
     rating,
     year,
     duration,
-    genre,
+    genres,
     description,
     comments,
     isWatchlist,
@@ -47,9 +53,23 @@ export const createFilmDetailsTemplate = (film) => {
 
   const commentItemsTemplate = comments.map((commentData, index) => createCommentItemTemplate(commentData, index === 0)).join(``);
 
-  const commentsCount = comments.length;
+  const genresItemsTemplate = genres.map((genreItem, index) => createGenreTemplate(genreItem, index === 1)).join(``);
 
-  const commentsLabel = commentsCount === 1 ? `Сomment` : `Сomments`;;
+  console.log(genres);
+  console.log(genresItemsTemplate);
+
+  const commentsCount = comments.length;
+  const commentsLabel = commentsCount === 1 ? `Сomment` : `Сomments`;
+
+  const writersCount = writers.length;
+  const writersLabel = writersCount === 1 ? `Writer` : `Writers`;
+
+  const genresCount = genres.length;
+  const genresLabel = genresCount === 1 ? `Genre` : `Genres`;
+
+  const watchlistStatus = isWatched ? `Checked` : ``;
+  const watchedStatus = isWatched ? `Checked` : ``;
+  const favoriteStatus = isFavorite ? `Checked` : ``;
 
   return `<section class="film-details">
     <form class="film-details__inner" action="" method="get">
@@ -59,20 +79,20 @@ export const createFilmDetailsTemplate = (film) => {
         </div>
         <div class="film-details__info-wrap">
           <div class="film-details__poster">
-            <img class="film-details__poster-img" src="./images/posters/the-great-flamarion.jpg" alt="">
+            <img class="film-details__poster-img" src="${poster}" alt="">
 
-            <p class="film-details__age">18+</p>
+            <p class="film-details__age">${ageRating} +</p>
           </div>
 
           <div class="film-details__info">
             <div class="film-details__info-head">
               <div class="film-details__title-wrap">
-                <h3 class="film-details__title">The Great Flamarion</h3>
-                <p class="film-details__title-original">Original: The Great Flamarion</p>
+                <h3 class="film-details__title">${title}</h3>
+                <p class="film-details__title-original">Original: ${originalTitle}</p>
               </div>
 
               <div class="film-details__rating">
-                <p class="film-details__total-rating">8.9</p>
+                <p class="film-details__total-rating">${rating}</p>
               </div>
             </div>
 
@@ -82,12 +102,12 @@ export const createFilmDetailsTemplate = (film) => {
                 <td class="film-details__cell">Anthony Mann</td>
               </tr>
               <tr class="film-details__row">
-                <td class="film-details__term">Writers</td>
-                <td class="film-details__cell">Anne Wigton, Heinz Herald, Richard Weil</td>
+                <td class="film-details__term">${writersLabel}</td>
+                <td class="film-details__cell">${writers}</td>
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Actors</td>
-                <td class="film-details__cell">Erich von Stroheim, Mary Beth Hughes, Dan Duryea</td>
+                <td class="film-details__cell">${actors}</td>
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Release Date</td>
@@ -95,18 +115,16 @@ export const createFilmDetailsTemplate = (film) => {
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Runtime</td>
-                <td class="film-details__cell">1h 18m</td>
+                <td class="film-details__cell">${duration}</td>
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Country</td>
-                <td class="film-details__cell">USA</td>
+                <td class="film-details__cell">${country}</td>
               </tr>
               <tr class="film-details__row">
-                <td class="film-details__term">Genres</td>
+                <td class="film-details__term">${genresLabel}</td>
                 <td class="film-details__cell">
-                  <span class="film-details__genre">Drama</span>
-                  <span class="film-details__genre">Film-Noir</span>
-                  <span class="film-details__genre">Mystery</span></td>
+                  ${genresItemsTemplate}
               </tr>
             </table>
 
@@ -117,13 +135,13 @@ export const createFilmDetailsTemplate = (film) => {
         </div>
 
         <section class="film-details__controls">
-          <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
+          <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${watchlistStatus}>
           <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
 
-          <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched">
+          <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${watchedStatus}>
           <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
 
-          <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite">
+          <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${favoriteStatus}>
           <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
         </section>
       </div>

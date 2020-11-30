@@ -7,7 +7,7 @@ export const createFilmCardTemplate = (film) => {
     rating,
     year,
     duration,
-    genre,
+    genres,
     description,
     comments,
     isWatchlist,
@@ -25,7 +25,7 @@ export const createFilmCardTemplate = (film) => {
     <p class="film-card__info">
       <span class="film-card__year">${year}</span>
       <span class="film-card__duration">${duration}</span>
-      <span class="film-card__genre">${genre}</span>
+      <span class="film-card__genre">${genres}</span>
     </p>
     <img src="${poster}" alt="" class="film-card__poster">
     <p class="film-card__description">${description}</p>

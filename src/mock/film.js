@@ -49,6 +49,20 @@ const generateDuration = () => {
   return durations[randomIndex];
 };
 
+const generateCountry = () => {
+  const countries = [
+    `USA`,
+    `France`,
+    `Germany`,
+    `Italy`,
+    `Canada`
+  ];
+
+  const randomIndex = getRandomInteger(1, countries.length - 1);
+
+  return countries[randomIndex];
+};
+
 const generateDescription = () => {
   const descriptionModel = [
     `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
@@ -75,25 +89,81 @@ const generateDescription = () => {
   return Array.from(description).join(` `);
 };
 
+const generateWriters = () => {
+  const writersModel = [
+    `Brayden Martinez`,
+    `Jacob Stephens`,
+    `Riley Meyer`,
+    `Bobby Lucas`,
+    `Mattie Welch`,
+    `Kelly Meyer`,
+    `Robin Hawkins`,
+  ];
+
+  const writers = new Set();
+
+  for (let i = 1; i < getRandomInteger(1, writersModel.length); i++) {
+    writers.add(writersModel[getRandomInteger(0, writersModel.length - 1)]);
+  }
+
+  return Array.from(writers).join(`, `);
+};
+
+const generateGenres = () => {
+  const genresModel = [
+    `Drama`,
+    `Film-Noir`,
+    `Mystery`
+  ];
+
+  const genres = new Set();
+
+  for (let i = 1; i < getRandomInteger(1, genresModel.length); i++) {
+    genres.add(genresModel[getRandomInteger(0, genresModel.length - 1)]);
+  }
+
+  return Array.from(genres);
+};
+
+const generateActors = () => {
+  const actorsModel = [
+    `Brayden Martinez`,
+    `Jacob Stephens`,
+    `Riley Meyer`,
+    `Bobby Lucas`,
+    `Mattie Welch`,
+    `Kelly Meyer`,
+    `Robin Hawkins`
+  ];
+
+  const actors = new Set();
+
+  for (let i = 1; i < getRandomInteger(3, actorsModel.length); i++) {
+    actors.add(actorsModel[getRandomInteger(0, actorsModel.length - 1)]);
+  }
+
+  return Array.from(actors).join(`, `);
+};
+
 export const generateFilm = () => {
   return {
     poster: generatePoster(),
     title: generateTitle(),
-    rating: getRandomInteger(4, 8),
+    rating: getRandomInteger(0, 9) + `.` + getRandomInteger(0, 9),
     year: getRandomInteger(1921, 1982),
     duration: generateDuration(),
-    genre: `genre`,
+    genres: generateGenres(),
     description: generateDescription(),
     commentsCount: getRandomInteger(0, 5),
     comments: generateComments(),
     isWatchlist: Boolean(getRandomInteger(0, 1)),
     isWatched: Boolean(getRandomInteger(0, 1)),
     isFavorite: Boolean(getRandomInteger(0, 1)),
-    originalTitle: `originalTitle`,
+    originalTitle: generateTitle(),
     director: `director`,
-    writers: `Writers`,
-    actors: `Actors`,
-    country: `Country`,
-    ageRating: `+` + getRandomInteger(0, 18),
+    writers: generateWriters(),
+    actors: generateActors(),
+    country: generateCountry(),
+    ageRating: getRandomInteger(0, 18),
   };
 };
