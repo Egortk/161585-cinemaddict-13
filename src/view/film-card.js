@@ -1,6 +1,6 @@
-import {watchlist, watched, favorite} from "../utils.js";
+import {watchlist, watched, favorite, createElement} from "../utils.js";
 
-export const createFilmCardTemplate = (film) => {
+const createFilmCardTemplate = (filmDetails) => {
   const {
     poster,
     title,
@@ -13,7 +13,7 @@ export const createFilmCardTemplate = (film) => {
     isWatchlist,
     isWatched,
     isFavorite
-  } = film;
+  } = filmDetails;
 
   const commentsCount = comments.length;
 
@@ -36,4 +36,27 @@ export const createFilmCardTemplate = (film) => {
       <button class="film-card__controls-item button film-card__controls-item--favorite ${favorite(isFavorite)}" type="button">Mark as favorite</button>
     </div>
   </article>`;
+};
+
+export default class FilmCard {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCardTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
 };
