@@ -30,9 +30,19 @@ const renderFilm = (filmListElement, film) => {
   const filmComponent = new FilmCardView(film);
   const filmDetailsComponent = new FilmDetailsView(film);
 
+  const onEscKeyDown = (evt) => {
+    if (evt.key === `Escape` || evt.key === `Esc`) {
+      evt.preventDefault();
+      siteMainElement.removeChild(filmDetailsComponent.getElement());
+      document.querySelector(`body`).classList.remove(`hide-overflow`);
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    }
+  };
+
   const openFilmDetails = () => {
-    document.querySelector(`body`).classList.add(`hide-overflow`);
     siteMainElement.appendChild(filmDetailsComponent.getElement());
+    document.querySelector(`body`).classList.add(`hide-overflow`);
+    document.addEventListener(`keydown`, onEscKeyDown);
     filmDetailsComponent.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, () => {
       document.querySelector(`body`).classList.remove(`hide-overflow`);
       siteMainElement.removeChild(filmDetailsComponent.getElement());
@@ -94,11 +104,11 @@ const mostCommentedFilmsListComponents = new FilmsListContainerView();
 render(mostCommentedComponents.getElement(), mostCommentedFilmsListComponents.getElement(), RenderPosition.BEFOREEND);
 
 for (let i = 0 ; i < TEMP_EXTRA_FILM_COUNT; i++) {
-  renderFilm(filmsListContainerComponents.getElement(), films[i]);
+  renderFilm(topRatedFilmsListComponents.getElement(), films[i]);
 }
 
 for (let i = 0 ; i < TEMP_EXTRA_FILM_COUNT; i++) {
-  renderFilm(filmsListContainerComponents.getElement(), films[i]);
+  renderFilm(mostCommentedFilmsListComponents.getElement(), films[i]);
 }
 
 render(siteFooter, new FooterStatisticView(films.length).getElement(), RenderPosition.BEFOREEND);
