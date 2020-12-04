@@ -1,4 +1,5 @@
 import {generateComments} from "../mock/comments.js";
+import {watchlist, watched, favorite, createElement} from "../utils.js";
 
 const createCommentItemTemplate = (commentData) => {
   const {
@@ -30,7 +31,7 @@ const createGenreTemplate = (genreItem) => {
   );
 };
 
-export const createFilmDetailsTemplate = (film) => {
+const createFilmDetailsTemplate = (film) => {
   const {
     poster,
     title,
@@ -54,9 +55,6 @@ export const createFilmDetailsTemplate = (film) => {
   const commentItemsTemplate = comments.map((commentData, index) => createCommentItemTemplate(commentData, index === 0)).join(``);
 
   const genresItemsTemplate = genres.map((genreItem, index) => createGenreTemplate(genreItem, index === 1)).join(``);
-
-  console.log(genres);
-  console.log(genresItemsTemplate);
 
   const commentsCount = comments.length;
   const commentsLabel = commentsCount === 1 ? `Сomment` : `Сomments`;
@@ -187,4 +185,27 @@ export const createFilmDetailsTemplate = (film) => {
       </div>
     </form>
   </section>`;
+};
+
+export default class FilmDetails {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmDetailsTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
 };

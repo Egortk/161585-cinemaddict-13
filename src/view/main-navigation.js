@@ -1,3 +1,5 @@
+import {createElement} from "../utils.js";
+
 const createFilterItemTemplate = (filter, isChecked) => {
   const {name, count} = filter;
 
@@ -14,7 +16,7 @@ const createFilterItemTemplate = (filter, isChecked) => {
   );
 };
 
-export const createMainNavigaionTemplate = (filterItems) => {
+const createMainNavigaionTemplate = (filterItems) => {
   const filterItemsTemplate = filterItems.map((filter, index) => createFilterItemTemplate(filter, index === 0)).join(``);
   return `<nav class="main-navigation">
     <div class="main-navigation__items">
@@ -27,4 +29,27 @@ export const createMainNavigaionTemplate = (filterItems) => {
     </div>
     <a href="#stats" class="main-navigation__additional">Stats</a>
   </nav>`;
+};
+
+export default class MainNavigation {
+  constructor(filters) {
+    this._filters = filters;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createMainNavigaionTemplate(this._filters);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
 };
