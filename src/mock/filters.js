@@ -1,4 +1,4 @@
-import {isWatchlist, isWatched, isFavorite} from "../utils.js";
+import {isWatchlist, isWatched, isFavorite} from "../utils/film.js";
 
 const filmToFilterMap = {
   Watchlist: (films) => films.filter((film) => film.isWatchlist).length,
