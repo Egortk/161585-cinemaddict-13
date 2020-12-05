@@ -14,7 +14,7 @@ import HeaderProfileView from "./view/header-profile.js";
 import FooterStatisticView from "./view/footer-statistic.js";
 import FilmDetailsView from "./view/film-details.js";
 import ButtonShowMoreView from "./view/button-show-more.js";
-import NoFilms from "./view/no-films.js";
+import NoFilmsView from "./view/no-films.js";
 
 const TEMP_FILM_COUNT = 32;
 const FILM_COUNT_PRE_STEP = 5;
@@ -29,7 +29,9 @@ const siteMainElement = document.querySelector(`.main`);
 
 render(siteHeader, new HeaderProfileView().getElement(), RenderPosition.BEFOREEND);
 render(siteMainElement, new MainNavigationView(filters).getElement(), RenderPosition.BEFOREEND);
-render(siteMainElement, new SortFilmsView().getElement(), RenderPosition.BEFOREEND);
+
+const sortFilmsElement = new SortFilmsView();
+render(siteMainElement, sortFilmsElement.getElement(), RenderPosition.BEFOREEND);
 
 const filmsComponents = new FilmsView();
 render(siteMainElement, filmsComponents.getElement(), RenderPosition.BEFOREEND);
@@ -72,12 +74,13 @@ const renderFilm = (filmListElement, film) => {
 
 const filmsRender = (films) => {
   if (films.length === 0) {
-    render(filmsListContainerComponents.getElement(), new NoFilms().getElement(), RenderPosition.BEFOREEND);
+    render(filmsListContainerComponents.getElement(), new NoFilmsView().getElement(), RenderPosition.BEFOREEND);
+    sortFilmsElement.getElement().remove();
+    sortFilmsElement.removeElement();
   } else {
     for (let i = 0 ; i < Math.min(films.length, FILM_COUNT_PRE_STEP); i++) {
       renderFilm(filmsListContainerComponents.getElement(), films[i]);
     }
-
     if (films.length > FILM_COUNT_PRE_STEP) {
       let renderedFilmCount = FILM_COUNT_PRE_STEP;
 
