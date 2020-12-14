@@ -1,4 +1,4 @@
-import {watchlist, watched, favorite} from "../utils.js";
+import {watchlist, watched, favorite} from "../utils/film.js";
 import AbstractView from "./abstract.js";
 
 const createFilmCardTemplate = (filmDetails) => {
