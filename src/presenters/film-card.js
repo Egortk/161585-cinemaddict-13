@@ -80,7 +80,7 @@ export default class FilmCardPresenter {
 
     _handleWatchlistClick() {
         this._changeData(
-            object.assign(
+            Object.assign(
                 {},
                 this._film,
                 {
@@ -92,7 +92,7 @@ export default class FilmCardPresenter {
 
     _handleWatchedClick() {
         this._changeData(
-            object.assign(
+            Object.assign(
                 {},
                 this._film,
                 {
@@ -104,7 +104,7 @@ export default class FilmCardPresenter {
 
     _handleFavoriteClick() {
         this._changeData(
-            object.assign(
+            Object.assign(
                 {},
                 this._film,
                 {
