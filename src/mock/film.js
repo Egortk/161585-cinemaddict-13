@@ -1,5 +1,6 @@
 import {getRandomInteger} from "../utils/common.js";
 import {generateComments} from "./comments";
+import {nanoid} from 'nanoid';
 
 const generatePoster = () => {
   const posters = [
@@ -147,6 +148,7 @@ const generateActors = () => {
 
 export const generateFilm = () => {
   return {
+    id: nanoid(),
     poster: generatePoster(),
     title: generateTitle(),
     rating: getRandomInteger(0, 9) + `.` + getRandomInteger(0, 9),

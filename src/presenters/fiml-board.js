@@ -12,6 +12,7 @@ import ButtonShowMoreView from "../view/button-show-more.js";
 import NoFilmsView from "../view/no-films.js";
 
 import FilmCardPresenter from "./film-card.js";
+import {updateItem} from "../utils/common.js";
 
 const FILM_COUNT_PRE_STEP = 5;
 const TEMP_EXTRA_FILM_COUNT = 2;
@@ -20,6 +21,7 @@ export default class FilmsBoard {
   constructor(siteMainElement) {
     this._siteMainElement = siteMainElement;
     this._renderFilmCount = FILM_COUNT_PRE_STEP;
+    this._filmPresenter = {};
 
     this._filmsComponents = new FilmsView();
     this._filmsListComponents = new FilmsListView();
@@ -29,6 +31,7 @@ export default class FilmsBoard {
     this._mainNavigationComponent = new MainNavigationView();
     this._sortFilmsComponent = new SortFilmsView();
 
+    this._handleFilmChange = this._handleFilmChange.bind(this);
     this._handleLoadMoreButtonClick = this._handleLoadMoreButtonClick.bind(this);
   }
 
@@ -42,6 +45,11 @@ export default class FilmsBoard {
     this._renderFilmsBoard();
   }
 
+  _handleFilmChange(updateFilm) {
+    this._renderFilmsBoard = updateItem(this._renderFilmsBoard, updateFilm);
+    this._filmPresenter[updateFilm.id].init(updateFilm);
+  }
+
   _renderMainNavigation() {
     const filters = generateFilter(this._films);
     render(this._siteMainElement, new MainNavigationView(filters), RenderPosition.AFTERBEGIN);
@@ -52,8 +60,9 @@ export default class FilmsBoard {
   }
 
   _renderFilm(filmsContainer, film) {
-    const filmPresenter = new FilmCardPresenter(filmsContainer);
-    filmPresenter.init(filmsContainer, film);
+    const filmPresenter = new FilmCardPresenter(filmsContainer, this._handleFilmChange);
+    filmPresenter.init(film);
+    this._filmPresenter[film.id] = filmPresenter;
   }
 
   _renderNoFilms() {
@@ -83,6 +92,15 @@ export default class FilmsBoard {
     if (this._films.length > this._renderFilmCount) {
       this._renderLoadMoreButton();
     }
+  }
+
+  _clearFilmList() {
+    Object
+      .values(this._filmPresenter)
+      .forEach((presenter) => presenter.destroy());
+    this._filmPresenter = {};
+    this._renderFilmCount = FILM_COUNT_PRE_STEP;
+    remove(this._renderLoadMoreButton);
   }
 
   _handleLoadMoreButtonClick() {

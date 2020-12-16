@@ -7,3 +7,4 @@ export const watched = (isWatched) => {
 export const favorite = (isFavorite) => {
   return isFavorite ? `film-card__controls-item--active` : ``;
 };
+
