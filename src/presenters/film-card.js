@@ -1,16 +1,23 @@
-import {render, RenderPosition} from "../utils/render.js";
+import {render, RenderPosition, remove, replace} from "../utils/render.js";
 
 import FilmCardView from "../view/film-card.js";
 import FilmDetailsView from "../view/film-details.js";
 
+const Mode = {
+    DEFAULT: `DEFAULT`,
+    DETAILS: `DETAILS`
+}
+
 export default class FilmCardPresenter {
-    constructor(filmsContainer, changeData) {
+    constructor(filmsContainer, changeData, changeMode) {
         this._bodyContainer = document.querySelector(`body`);
         this._filmsContainer = filmsContainer;
         this._changeData = changeData;
+        this._changeMode = changeMode;
 
         this._filmComponent = null;
         this._filmDetailsComponent = null;
+        this._mode = Mode.DEFAULT;
 
         this._onEscKeyDown = this._onEscKeyDown.bind(this);
         this._openFilmDetails = this._openFilmDetails.bind(this);
@@ -39,8 +46,18 @@ export default class FilmCardPresenter {
             return;
         }
 
+        if(this._mode === Mode.DETAILS) {
+            replace(this._filmComponent, prevFilmComponent);
+        }
+
         remove(prevFilmComponent);
         remove(prevfilmDetailsComponent);
+    }
+
+    _resetView() {
+        if (this._mode === Mode.DEFAULT) {
+            this._hideFilmDetails();
+        }
     }
 
     _showFilmDetails() {
