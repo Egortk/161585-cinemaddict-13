@@ -46,16 +46,20 @@ export default class FilmCardPresenter {
             return;
         }
 
-        if(this._mode === Mode.DETAILS) {
+        if(this._mode === Mode.DEFAULT) {
             replace(this._filmComponent, prevFilmComponent);
+        }
+
+        if(this._mode === Mode.DETAILS) {
+            replace(this._filmDetailsComponent, prevfilmDetailsComponent);
         }
 
         remove(prevFilmComponent);
         remove(prevfilmDetailsComponent);
     }
 
-    _resetView() {
-        if (this._mode === Mode.DEFAULT) {
+    resetView() {
+        if (this._mode !== Mode.DEFAULT) {
             this._hideFilmDetails();
         }
     }
