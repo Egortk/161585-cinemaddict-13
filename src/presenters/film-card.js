@@ -70,6 +70,7 @@ export default class FilmCardPresenter {
 
     _hideFilmDetails() {
         this._bodyContainer.removeChild(this._filmDetailsComponent.getElement());
+        this._mode.DETAILS;
     }
 
     _onEscKeyDown(evt){
